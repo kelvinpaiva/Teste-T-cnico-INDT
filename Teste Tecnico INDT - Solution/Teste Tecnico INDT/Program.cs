@@ -34,3 +34,6 @@ using (var scope = app.Services.CreateScope())
 app.MapControllers();
 
 app.Run();
+
+// Classe pública para testes de integração
+public partial class Program { }
