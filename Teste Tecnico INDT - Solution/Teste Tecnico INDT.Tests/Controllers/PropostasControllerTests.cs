@@ -52,7 +52,7 @@ public class PropostasControllerTests
     }
 
     [Fact]
-    public async Task Criar_ComNomeClienteVazio_DeveRetornarCreated()
+    public async Task Criar_ComNomeClienteVazio_DevePropagarExcecao()
     {
         // Arrange
         var request = new CriarPropostaRequest
@@ -60,19 +60,17 @@ public class PropostasControllerTests
             NomeCliente = "",
             Produto = "Seguro Auto"
         };
-        var proposta = new Proposta("", "Seguro Auto");
+        var expectedException = new ArgumentException("Nome do cliente é obrigatório", "nomeCliente");
         
         _mockServico.Setup(s => s.CriarAsync("", "Seguro Auto", It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(proposta);
+                   .ThrowsAsync(expectedException);
 
-        // Act
-        var result = await _controller.Criar(request, CancellationToken.None);
-
-        // Assert
-        var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-        var response = Assert.IsType<PropostaResponse>(createdResult.Value);
-        Assert.Equal("", response.NomeCliente);
-        Assert.Equal("Seguro Auto", response.Produto);
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<ArgumentException>(
+            () => _controller.Criar(request, CancellationToken.None));
+        
+        Assert.Contains("Nome do cliente é obrigatório", exception.Message);
+        _mockServico.Verify(s => s.CriarAsync("", "Seguro Auto", It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

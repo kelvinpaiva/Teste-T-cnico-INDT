@@ -66,24 +66,21 @@ public class ContratacoesControllerTests
     }
 
     [Fact]
-    public async Task Criar_ComPropostaIdVazio_DeveRetornarCreated()
+    public async Task Criar_ComPropostaIdVazio_DeveRetornarNotFound()
     {
         // Arrange
         var propostaId = Guid.Empty;
         var request = new CriarContratacaoRequest { PropostaId = propostaId };
-        var contratacao = new Contratacao(propostaId);
         
         _mockServico.Setup(s => s.ContratarAsync(propostaId, It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(contratacao);
+                   .ReturnsAsync((Contratacao?)null);
 
         // Act
         var result = await _controller.Criar(request, CancellationToken.None);
 
         // Assert
-        var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-        var response = Assert.IsType<ContratacaoResponse>(createdResult.Value);
-        Assert.Equal(contratacao.Id, response.Id);
-        Assert.Equal(propostaId, response.PropostaId);
+        Assert.IsType<NotFoundResult>(result.Result);
+        _mockServico.Verify(s => s.ContratarAsync(propostaId, It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
