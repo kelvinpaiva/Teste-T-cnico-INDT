@@ -1,0 +1,42 @@
+@HostAddress = http://localhost:8081
+
+### Testar se a API está funcionando
+GET {{HostAddress}}/api/propostas
+Accept: application/json
+
+### Testar contratações
+GET {{HostAddress}}/api/contratacoes
+Accept: application/json
+
+### Criar uma proposta
+POST {{HostAddress}}/api/propostas
+Content-Type: application/json
+
+{
+  "nomeCliente": "João Silva",
+  "produto": "Seguro Auto"
+}
+
+### Listar propostas após criação
+GET {{HostAddress}}/api/propostas
+Accept: application/json
+
+### Obter proposta por ID (substitua pelo ID real)
+GET {{HostAddress}}/api/propostas/{{propostaId}}
+Accept: application/json
+
+### Aprovar proposta (substitua pelo ID real)
+POST {{HostAddress}}/api/propostas/{{propostaId}}/aprovar
+Accept: application/json
+
+### Criar contratação (substitua pelo ID da proposta aprovada)
+POST {{HostAddress}}/api/contratacoes
+Content-Type: application/json
+
+{
+  "propostaId": "{{propostaId}}"
+}
+
+### Listar contratações
+GET {{HostAddress}}/api/contratacoes
+Accept: application/json

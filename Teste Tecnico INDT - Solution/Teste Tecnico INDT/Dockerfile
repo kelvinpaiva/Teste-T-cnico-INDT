@@ -22,5 +22,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # banco por padrão dentro do container, pode ser sobrescrito por env
-ENV ConnectionStrings__Default=Data Source=/app/propostas.db
+ENV ConnectionStrings__Default="Data Source=/app/propostas.db"
 ENTRYPOINT ["dotnet", "Teste Tecnico INDT.dll"]
