@@ -20,9 +20,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Teste Tecnico INDT.Aplicacao\Teste Tecnico INDT.Aplicacao.csproj" />
-    <ProjectReference Include="..\Teste Tecnico INDT.Infraestrutura\Teste Tecnico INDT.Infraestrutura.csproj" />
-  </ItemGroup>
-
 </Project>

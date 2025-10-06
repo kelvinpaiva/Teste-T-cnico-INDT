@@ -102,5 +102,4 @@ dotnet ef migrations add NovaMudanca
 ```
 
 ## Observações
-- Nomes PT-BR em pastas, classes e funções conforme solicitado.
 - Banco padrão: SQLite `Data Source=propostas.db` (configurável em `appsettings.json`).
